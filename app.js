@@ -4,7 +4,7 @@ const path = require('path');
 const {use} = require("express/lib/router");
 
 
-const PORT = 5200;
+const PORT = 5200; //v posylanniah treba miniaty vryuchnu!!!
 const app = express();
 app.use(express.json());
 app.use(express.urlencoded({extended: true}))
@@ -63,20 +63,25 @@ app.get('/users/:userId', (req, res)=>{
     res.json(users[userId-1]);
 })
 
-app.get('/users/:userId', (req, res)=>{
-    console.log(req.query);
-    const {age, city} = req.query;
-    if (age && city) {
-        console.log('q: age & city')
-        res.json(users.filter(user => user.age>age).filter(user=> user.city===city));
-    } else if (age) {
-        console.log('q: age')
-        res.json(users.filter(user => user.age>age));
-    } else if (city){
-        res.json(users.filter(user=> user.city===city));
-        console.log('q: city')
+app.get('/users/query/:userId', (req, res) => {
+    if (req.query === {}) {
+        const {userId} = req.params;
+        res.json(users[userId - 1]);
     } else {
-        console.log('wrong query')
+        console.log(req.query);
+        const {age, city} = req.query;
+        if (age && city) {
+            console.log('q: age & city')
+            res.json(users.filter(user => user.age > age).filter(user => user.city === city));
+        } else if (age) {
+            console.log('q: age')
+            res.json(users.filter(user => user.age > age));
+        } else if (city) {
+            res.json(users.filter(user => user.city === city));
+            console.log('q: city')
+        } else {
+            console.log('wrong query')
+        }
     }
 })
 
@@ -88,7 +93,6 @@ app.post('/login', (req, res) => {
     } else {
         res.redirect('/wrongmail');
     }
-
 })
 
 app.get('/wrongmail', (req, res) => {

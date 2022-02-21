@@ -7,14 +7,26 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Document</title>
 </head>
-<body>
+<body style="padding: 0; margin: 0;">
 
 <div style="display:flex; flex-direction: column">
-    <div><a href="http://localhost:5200/login">Login</a></div>
+    <div style="display:flex;
+        font-size: 17px;
+        flex-direction: column;
+        padding: 15px;
+        color: white;
+        background-color: cornflowerblue;
+        gap: 3px">
+        <div><a href="http://localhost:5200/login">Login</a></div>
+        <div><a href="http://localhost:5200/users/4">http://localhost:5200/users/4</a></div>
+        <div><a href="http://localhost:5200/users/query/1?city=Odessa">http://localhost:5200/users/query/1?city=Odessa</a></div>
+        <div><a href="http://localhost:5200/users/query/1?age=40">http://localhost:5200/users/query/1?age=40</a></div>
+        <div><a href="http://localhost:5200/users/query/1?age=40&city=Kyiv">http://localhost:5200/users/query/1?age=40</a></div>
+    </div>
 
     <div style="display:flex; flex-wrap: wrap">
-    {{#each users}}
-        <div style="display:flex;
+        {{#each users}}
+            <div style="display:flex;
         font-size: 18px;
         flex-direction: column;
         flex-wrap: wrap;
@@ -24,14 +36,14 @@
         color: white;
         background-color: cornflowerblue;
         gap: 10px">
-            <div>First name:{{this.firstName}}</div>
-            <div>Last name:{{this.lastName}}</div>
-            <div>Email:{{this.email}}</div>
-            <div>Password:{{this.password}}</div>
-            <div>Age:{{this.age}}</div>
-            <div>City:{{this.city}}</div>
-        </div>
-       {{/each}}
+                <div>First name:{{this.firstName}}</div>
+                <div>Last name:{{this.lastName}}</div>
+                <div>Email:{{this.email}}</div>
+                <div>Password:{{this.password}}</div>
+                <div>Age:{{this.age}}</div>
+                <div>City:{{this.city}}</div>
+            </div>
+        {{/each}}
     </div>
 </div>
 
