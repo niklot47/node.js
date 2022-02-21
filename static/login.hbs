@@ -7,12 +7,35 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Document</title>
 </head>
-<body>
+<body style="display:flex;
+    align-items: center;
+    justify-content: center;
+    height: 90vh;
+    margin: 0;
+    padding: 0;
+    background-color: cornflowerblue">
 
-<form action="/login" method="post">
-    LOGIN:<input type="text" name="login">
-    PASSWORD:<input type="text" name="password">
-    <input type="submit" value="OK">
+<form action="/login" method="post" style="display:flex;
+                                            flex-direction: column;
+                                            align-items: center;
+                                            gap: 5px;
+                                            font-size: 20px;
+                                            border-radius: 20px;
+                                            background-color: white;
+                                            padding: 20px;">
+    <a href="http://localhost:5200/users">All users</a>
+    First name:<input type="text" name="firstName">
+    Last name:<input type="text" name="lastName">
+    Email:<input type="text" name="email">
+    Password:<input type="text" name="password">
+    Age:<input type="number" name="age">
+    City:<select type="text" name="city" style="width: 100%">
+    <option value="Kyiv">Kyiv</option>
+    <option value="Lviv">Lviv</option>
+    <option value="Kharkiv">Kharkiv</option>
+    <option value="Odessa">Odessa</option>
+</select>
+    <input type="submit" value="OK" style="width: 100%; display:flex; justify-content: center; margin-top: 10px;">
 </form>
 
 </body>

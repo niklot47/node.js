@@ -9,13 +9,30 @@
 </head>
 <body>
 
-<div>
+<div style="display:flex; flex-direction: column">
+    <div><a href="http://localhost:5200/login">Login</a></div>
+
+    <div style="display:flex; flex-wrap: wrap">
     {{#each users}}
-        <div style="display:flex; margin: 5px; padding: 5px;background-color: cornflowerblue; gap: 20px">
-            <div>LOGIN:{{this.login}}</div>
-            <div>PASSWORD:{{this.password}}</div>
+        <div style="display:flex;
+        font-size: 18px;
+        flex-direction: column;
+        flex-wrap: wrap;
+        border-radius: 10px;
+        margin: 5px;
+        padding: 15px;
+        color: white;
+        background-color: cornflowerblue;
+        gap: 10px">
+            <div>First name:{{this.firstName}}</div>
+            <div>Last name:{{this.lastName}}</div>
+            <div>Email:{{this.email}}</div>
+            <div>Password:{{this.password}}</div>
+            <div>Age:{{this.age}}</div>
+            <div>City:{{this.city}}</div>
         </div>
        {{/each}}
+    </div>
 </div>
 
 </body>

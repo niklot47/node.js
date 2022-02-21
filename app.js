@@ -1,12 +1,13 @@
 const express = require('express');
 const {engine} = require('express-handlebars');
 const path = require('path');
+const {use} = require("express/lib/router");
 
 
 const PORT = 5200;
 const app = express();
 app.use(express.json());
-app.use(express.urlencoded({extended:true}))
+app.use(express.urlencoded({extended: true}))
 
 app.use(express.static(path.join(__dirname, 'static')));
 app.set('view engine', '.hbs');
@@ -14,54 +15,88 @@ app.engine('.hbs', engine({defaultLayout: false}));
 app.set('views', path.join(__dirname, 'static'));
 
 const users = [
-    {userId: 1,login: "Bogdan", age: 22, city: "Odessa", password: '1234'},
-    {userId: 2,login: "Stepan", age: 26, city: "Lviv", password: '1234'},
-    {userId: 3,login: "Olena", age: 26, city: "Dnipro", password: '1234'},
-    {userId: 4,login: "Roman", age: 32, city: "Kyiv", password: '1234'},
-    {userId: 5,login: "Andrii", age: 22, city: "Lviv", password: '1234'},
-    {userId: 6,login: "Pavlo", age: 41, city: "Lviv", password: '1234'},
-    {userId: 7,login: "Taniy", age: 24, city: "Odessa", password: '1234'},
-    {userId: 8,login: "Iryna", age: 25, city: "Kyiv", password: '1234'},
-    {userId: 9,login: "Ostap", age: 29, city: "Kharkiv", password: '1234'},
-    {userId: 10,login: "Polina", age: 22, city: "Kyiv", password: '1234'},
-    {userId: 11,login: "Ivan", age: 22, city: "Odessa", password: '1234'},
-    {userId: 12,login: "Oleg", age: 26, city: "Rivno", password: '1234'},
-    {userId: 13,login: "Volodymyr", age: 26, city: "Dnipro", password: '1234'},
-    {userId: 14,login: "Taras", age: 32, city: "Poltava", password: '1234'},
-    {userId: 15,login: "Alina", age: 22, city: "Lviv", password: '1234'},
-    {userId: 16,login: "Veronika", age: 41, city: "Poltava", password: '1234'},
-    {userId: 17,login: "Stepan", age: 24, city: "Rivno", password: '1234'},
-    {userId: 18,login: "Iryna", age: 25, city: "Odessa", password: '1234'},
-    {userId: 19,login: "Pavlo", age: 29, city: "Kharkiv", password: '1234'},
-    {userId: 20,login: "Karolina", age: 22, city: "Odessa", password: '1234'}
+    {
+        firstName: 'Mykola',
+        lastName: 'Kozakov',
+        email: 'mk@gmailcom',
+        password: '123456',
+        age: '28',
+        city: 'Lviv'
+    },
+    {
+        firstName: 'Tom',
+        lastName: 'Cruise',
+        email: 'tc@gmail.com',
+        password: '147258',
+        age: '49',
+        city: 'Kyiv'
+    },
+    {
+        firstName: 'Albert ',
+        lastName: 'Einstein',
+        email: 'ae@ae.de',
+        password: '159263',
+        age: '55',
+        city: 'Odessa'
+    },
+    {
+        firstName: 'Nikola ',
+        lastName: 'Tesla',
+        email: 'nt@ac.dc',
+        password: 'fckEdison',
+        age: '99',
+        city: 'Odessa'
+    }
 ];
 
-app.get('/login', (req, res)=>{
+app.get('/login', (req, res) => {
     res.render('login');
 })
 
-app.get('/users', (req, res)=>{
+app.get('/users', (req, res) => {
     res.render('users', {users});
 })
 
-// app.get('/users/:userId', (req, res)=>{
-//     console.log(req.params);
-//     const {userId} = req.params;
-//     res.json(users[userId]);
-// })
+app.get('/users/:userId', (req, res)=>{
+    // console.log(req.params);
+    const {userId} = req.params;
+    res.json(users[userId-1]);
+})
 
 app.get('/users/:userId', (req, res)=>{
     console.log(req.query);
-    const {userId} = req.params;
-    res.json(users[userId]);
+    const {age, city} = req.query;
+    if (age && city) {
+        console.log('q: age & city')
+        res.json(users.filter(user => user.age>age).filter(user=> user.city===city));
+    } else if (age) {
+        console.log('q: age')
+        res.json(users.filter(user => user.age>age));
+    } else if (city){
+        res.json(users.filter(user=> user.city===city));
+        console.log('q: city')
+    } else {
+        console.log('wrong query')
+    }
 })
 
-app.post('/login', (req, res)=>{
-    users.push(req.body);
-    res.redirect('/users');
+app.post('/login', (req, res) => {
+    if (users.filter(user => user.email === req.body.email).length === 0) {
+        users.push(req.body);
+        // console.log(req.body);
+        res.redirect('/users');
+    } else {
+        res.redirect('/wrongmail');
+    }
+
 })
 
-app.use((req, res)=>{
+app.get('/wrongmail', (req, res) => {
+    res.render('wrongmail');
+})
+
+
+app.use((req, res) => {
     res.render('nf');
 })
 
